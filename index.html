@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questionnaire</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    *{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-color: #efefef;
+    padding: 25px;
+}
+  @media screen and (min-width: 80rem) {
+  body {
+    margin: 1em 2em;
+  }
+}
+
+  .questionnaire_ajouter_ligne
+  {
+    font-size: medium;
+    background-color: #60a5fa;
+    height: 35px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+   .questionnaire_table
+   {
+     border-collapse: separate;
+     font-size:19px;
+     width:100%;
+   }
+
+   .questionnaire_table_label
+   {
+     /*width: 19%;*/
+     background-color: #dbeafe;
+     width:25%;
+   }
+
+   .questionnaire_label
+   {
+     font-family: Nunito, sans-serif;
+     font-size: 0.857em;
+   }
+
+   .questionnaire_label_gras
+   {
+     /* font-weight:bold; */
+     padding-left:4px;
+   }
+
+   .questionnaire_label_fix
+   {
+     background-color:#dbeafe;
+     display:block;
+     padding:4px;
+     width:99.8%;
+   }
+
+   .questionnaire_textarea
+   {
+     resize:vertical;
+     width:99.8%;
+   }
+
+   .questionnaire_input_text
+   {
+     border: 2px solid #c1daf7;
+     background-color: #c1daf7;
+     padding: 0px;
+     transition: border-color 0.3s;
+     outline:none;
+     /*width:25%;*/
+   }
+
+   .questionnaire_input_text:disabled
+   {
+     background-color:#ccc;
+     border: 2px solid #ccc;
+   }
+
+   .questionnaire_input_text_small
+   {
+     width:99%;
+     /*max-width: 450px;*/
+   }
+
+   .questionnaire_input_text_smaller
+   {
+     width:98%;
+     /*max-width:350px;*/
+   }
+
+   .questionnaire_input_text:focus
+   {
+     border: 2px solid #97bdea;
+     outline:none;
+   }
+
+   .questionnaire_titre_categorie
+   {
+     font-family: Nunito, sans-serif;
+     margin-bottom: -6px;
+     color: #60a5fa;
+     font-weight: 800;
+   }
+
+   .questionnaire_submit
+   {
+     border-radius: 4px;
+     background-color: #60a5fa;
+     border: none; color: white;
+     padding: 14px 24px;
+     text-decoration: none;
+     margin: 4px 2px;
+     cursor: pointer;
+     transition: background-color 0.3s;
+   }
+
+   .questionnaire_submit:hover
+   {
+     background-color: #81b4f7;
+   }
+
+   .questionnaire_soustitre
+   {
+     font-family: Nunito, sans-serif;
+     margin: 0px 10px 10px 0px;
+     color: #bfdbfe;
+   }
+
+   .questionnaire_select
+   {
+     background-color:#c1daf7;
+     border: 2px solid #c1daf7;
+     width:99%;
+     max-height:30px;
+     vertical-align:middle;
+     padding:4px;
+   }
+
+   .questionnaire_note_desc
+   {
+     font-size:16px;
+     font-style:italic;
+   }
+
+   .questionnaire_note
+   {
+     width:100%;
+     text-align: center;
+     vertical-align: middle;
+   }
+
+.container
+{
+    /* max-width: 900px; */
+    width: 100%;
+    background-color: #fff;
+    margin: auto;
+    padding: 15px;
+    box-shadow: 0 2px 20px #0001, 0 1px 6px #0001;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+._table
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+._table :is(th,td)
+{
+    border: 1px solid #0002;
+    padding: 8px 10px;
+
+}
+
+.action_container
+{
+    border: none;
+}
+
+/* form field design start */
+
+.form_control
+{
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #0002;
+    background-color: transparent;
+    outline: none;
+    padding: 8px 12px;
+    font-family: 1.2rem;
+    width: 100%;
+    color: #333;
+    color: red;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+
+.form_control::placeholder
+{
+    color: inherit;
+    opacity: 0.5;
+}
+
+.form_control:is(:focus, :hover)
+{
+    box-shadow: inset 0 1px 6px #0002;
+}
+
+/* form field design end */
+
+.success
+{
+    background-color: #24b96f !important;
+}
+.warning
+{
+    background-color: #ebba33 !important;
+}
+.primary
+{
+    background-color: #259dff !important;
+}
+.secondary
+{
+    background-color: #00bcd4 !important;
+}
+.danger
+{
+    /* border: none; */
+   background-color: #ff5722 !important;
+}
+.action_container
+{
+    display: inline-flex;
+}
+.action_container>*
+{
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    /* display: inline-block; */
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+/* .action_container>*+*
+{
+    background-color: red !important;
+} */
+.action_container>*:hover
+{
+    filter: hue-rotate(-20deg) brightness(0.97);
+    transform: scale(1.05);
+    border-color: transparent;
+    box-shadow: 0 2px 10px #0004;
+    border-radius: 2px;
+}
+.action_container>*:active
+{
+    transform: scale(.95);
+}
+.overlay
+    {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+    }
+    .modal
+    {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 600px;
+        height: 400px;
+        background-color: #fff;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        border-radius: 3px;
+        padding: 20px;
+        display: none;
+    }
+    .modal--open
+    {
+        display: block;
+    }
+    .modal_close
+    {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        cursor: pointer;
+        transition: 0.3s all ease-in-out;
+    }
+    .modal_close svg
+    {
+        height: 20px;
+        width: 20px;
+    }
+    .modal_close:hover
+    {
+        transform: rotate(360deg);
+    }
+    .modal_header h2
+    {
+        font-size: 30px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .modal_body p
+    {
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .modal_footer button
+    {
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        background-color: #3f51b5;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s all ease-in-out;
+    }
+    .modal_footer button:hover
+    {
+        background-color: #303f9f;
+    }
+    .signature-body
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        background: #ececec;
+        overflow: hidden;
+    }
+    .flex-row
+    {
+        display: flex;
+    }
+    .wrapper
+    {
+        border: 1px solid #4b00ff;
+        border-right: 0;
+    }
+    canvas#signature-pad
+    {
+        background: #fff;
+        width: 100%;
+        height: 100%;
+        cursor: crosshair;
+    }
+    button#clear
+    {
+        height: 100%;
+        background: #4b00ff;
+        border: 1px solid transparent;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    button#clear span
+    {
+        transform: rotate(90deg);
+        display: bl;
+    }
+</style>
+<body>
+    <div class="overlay"></div>
+    <form action="" id="form_id">
+    <div class="modal">
+        <div onclick="closeModal()" class="modal_close"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </div>
+        <div class="modal_header">
+            <h2 class="modal_titre">Signature</h2>
+        </div>
+        <div class="modal_body">
+            <div class="signature-body">
+                <div class="flex-row">
+                    <div class="wrapper">
+                        <canvas class="signature-pad" id="signature-pad" width="400" height="200"></canvas>
+                    </div>
+                    <div class="clear">
+                        <button id="clear">
+                            <span>Efacer</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal_footer">
+            <button onclick="closeModal()" class="modal_footer_button">Enregistrer</button>
+        </div>
+    </div>
+    <div class="container">
+        <table style="margin-top: 25px;" class="questionnaire_table">
+            <tr>
+                <td colspan="4"><h2 style="margin-top: 25px;" class="questionnaire_titre_categorie">Attestation de présence effective au bilan de compétences</h2></td>
+            </tr>
+
+            <tr>
+                <td colspan="4"><hr><br><br></td>
+            </tr>
+            <tr>
+                <td class="questionnaire_table_label"><label class="questionnaire_label questionnaire_label_gras" for="Q_NomPrenomClient">Nom et prénom du bénéficiaire :</label></td>
+                <td><input class="questionnaire_input_text questionnaire_input_text_small" type="text" id="QNomPrenomClient" name="Q_NomPrenomClient" disabled value="<!--4DTEXT [Dossier]NomDuClient-->"></td>
+                <td class="questionnaire_table_label"><label class="questionnaire_label questionnaire_label_gras" for="Q_NumeroDeDossier">Numéro de dossier :</label></td>
+                <td><input class="questionnaire_input_text questionnaire_input_text_small" type="text" id="Q_NumeroDeDossier" disabled name="Q_NumeroDeDossier" value="<!--4DTEXT [Dossier]RefCPF-->"></td>
+            </tr>
+            <tr>
+                <td class="questionnaire_table_label"><label class="questionnaire_label questionnaire_label_gras" for="Q_OrganismePrestataire">Nom de l'organisme prestataire et lieu d'intervention :</label></td>
+                <td><input class="questionnaire_input_text questionnaire_input_text_small" type="text" id="Q_OrganismePrestataire" disabled name="Q_OrganismePrestataire" value="<!--4DTEXT [Tiers]RaisonSocial-->"></td>
+            </tr>
+        </table><br><br>
+        <table id="table_id" class="_table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Contenu/Objectifs de la séance</th>
+                    <th>Durée</th>
+                    <th>Type RDV</th>
+                    <th>Intervenant</th>
+                    <th>Signature Intervenant</th>
+                    <th>Signature Bénéficiaire</th>
+                    <th>Actions</th>
+                    <th width="50px">
+                        <div class="action_container">
+                            <button type="button" class="success" onclick="create_tr('table_body')">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <!-- <div class="action_container">
+                            <button class="primary">
+                                <a href="#">
+                                    <i class="fa fa-eye"></i>
+                            </button>
+                        </div> -->
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="table_body">
+                <tr>
+                    <td>
+                        <input type="date" class="form_control" placeholder="Date" name="Q_Date" value="Q_Date" required>
+                    </td>
+                    <td>
+                        <input type="text" class="form_control" placeholder="" name="Q_Objectifs" value="Q_Objectifs" required>
+                    </td>
+                    <td>
+                        <label for="Q_Duree"></label>
+                        <input type="number" class="form_control" placeholder="" name="Q_Duree" value="Q_Duree" required>
+                    </td>
+                    <td>
+                        <div>
+                            <select name="Q_type" id="Q_type" value="Q_type" required>
+                                <option value="Visio">Visio</option>
+                                <option value="Tél">Tél</option>
+                                <option value="Présentiel">Présentiel</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="text" disabled class="form_control" placeholder="" name="Q_Intervenant" value="<!--4DTEXT [Dossier]NomDuFormateur-->">
+                    </td>
+                    <td>
+                        <div>
+                            <button class="" onclick="openModal()" type="button">
+                                <i class="">Signer</i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button class="" onclick="openModal()" type="button">
+                                <i class="">Signer</i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action_container">
+                            <button class="questionnaire_submit" type="submit">
+                                <i class="fa fa-save"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action_container">
+                            <button class="danger" onclick="remove_tr(this)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br><br><br>
+        <table class="questionnaire_note">
+            <tr class="questionnaire_note_ligne">
+                <td style="text-align:left;"><span class="questionnaire_note_desc">Le bénéficiaire atteste la réception d'une synthèse de son bilan de compétences : </span></td>
+                <td>Oui</td>
+                <td>Non</td>
+                <td style="text-align:right;"><span class="questionnaire_note_desc"></span></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="radio" name="Q_ReceptionSyntheseBilan" value="1"></td>
+                <td><input type="radio" name="Q_ReceptionSyntheseBilan" value="2"></td>
+                <td></td>
+            </tr>
+            <tr class="questionnaire_note_ligne">
+                <td style="text-align:left;"><span class="questionnaire_note_desc">Le bénéficiaire reconnait avoir pris connaissance de CGV et du traitement de collecte des données personnelles : </span></td>
+                <td>Oui</td>
+                <td>Non</td>
+                <td style="text-align:right;"><span class="questionnaire_note_desc"></span></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><input type="radio" name="Q_CgvRgpd" value="1"></td>
+                <td><input type="radio" name="Q_CgvRgpd" value="2"></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="4" style="text-align:center;">
+                  <input style="margin-top: 45px;" class="questionnaire_submit" type="submit" value="Envoyer">
+                </td>
+              </tr>
+        </table>
+    </form>
+    </div>
+    <script src="app.js">
+    </script>
+</body>
+</html>
